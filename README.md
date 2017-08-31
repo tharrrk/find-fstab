@@ -53,13 +53,13 @@ LIMITATIONS
   If you create one after you've overwritten your file you may be overwriting the data you are search for in the blocks.
 - Whole matching blocks are saved. You need to truncate/correct the contents manually.
 - Read permission on a whole block device and write permission on DUMPFS are needed for user who runs this tool.
-- Please note that FDE (i.e. LUKS) DOES NOT block you from finding your content as long as the filesystem is mounted.
-  File level encryption like EncryptFS DOES.
+- Please note that FDE (i.e. LUKS) **DOES NOT** block you from finding your content as long as the filesystem is mounted and you search through the decrypted device.
+  File level encryption like EncryptFS **DOES**.
 - CONTENTS may contain any characters except NULL (\x00).
-  So NO - you cannot search for UTF16 text documents, unless you modify the grep command.
+  So **NO** - you cannot search for UTF16 text documents, unless you modify the grep command to use regexes.
 - Too short CONTENTS will match too many blocks
 - If the device is a partition or logical volume, the search won't start until it reaches the physical end of device.
-  Press Ctrl-C if you are running over 100%.
+  Press Ctrl-C if you are running over 100% and don't want to search through 
 
 EXAMPLES
 --------
@@ -69,7 +69,7 @@ You accidentally run echo "something" > /etc/fstab instead of echo "something" >
 Well you can use /proc/mounts or /etc/mtab but it may contain mounts you don't need to have in fstab.
 Or the nice UUID becomes /dev/sdXY. Or anything else.
 
-[1]
+[2]
 You can use it for different files:
   - CONTENTS='#!/bin/bash' or CONTENTS='#!/usr/bin/env bash' may find you your overwritten bash script (note the header)
   - CONTENTS='%PDF-' can find you "over-printed" PDFs
