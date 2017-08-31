@@ -23,7 +23,7 @@ BEST PRACTICES
 
 - If you do some stupid thing, remount your filesystem readonly. Immediately.
 - Then (export variables and) execute the one-liner.
-- *_BACKUP YOUR IMPORTANT FILES BEFORE DOING STUPID THINGS! LOL._*
+- *BACKUP YOUR IMPORTANT FILES BEFORE DOING STUPID THINGS!* LOL :)
 
 DEPENDENCIES (Ubuntu packages as reference)
 
