@@ -1,13 +1,16 @@
 DESCRIPTION
+
 A bash one-liner to help find overwritten file on the disk.
 
 EXPLANATION
+
 You can still find a previous (or even current) version somewhere on the disk if you are lucky.
 Should work even if the file was deleted unless you deleted containing directory.
 Not tested. You may try this or undelete if the filesystem supports such operation.
 No guarantee, of course. It depends on a number of conditions.
 
 MODIFY PARAMETERS
+
 You can set few environmental variables (upper case) to change the default behavior.
 Take a look at the script file. Explanation is there.
 You have to know part of the CONTENTS, preferably the header of the file.
@@ -18,15 +21,18 @@ So setting DUMPFS to the same device you are searching through is really stupid 
 Mount a tmpfs somewhere if you have no other permanent device and copy files later.
 
 BEST PRACTICES
+
 - If you do some stupid thing, remount your filesystem readonly. Immediately.
 - Then (export variables and) execute the one-liner.
 - *** BACKUP YOUR IMPORTANT FILES BEFORE DOING STUPID THINGS! LOL. ***
 
 EXAMPLES
+
 [1]
 You accidentally run echo "something" > /etc/fstab instead of echo "something" >> /etc/fstab.
 Well you can use /proc/mounts or /etc/mtab but it may contain mounts you don't need to have in fstab.
 Or the nice UUID becomes /dev/sdXY. Or anything else.
+
 [2]
 You can use it for different files:
   - CONTENTS='#!/bin/bash' or CONTENTS='#!/usr/bin/env bash' may find you your overwritten bash script (note the header)
@@ -34,6 +40,7 @@ You can use it for different files:
   - CONTENTS='JFIF' or CONTENTS='Exif' may find your deleted holiday photos.
   - CONTENTS=$'\x89PNG' can find your deleted PNG images
 and so on.
+
 [3]
 You find what you were looking for but it's truncated and/or CONTENTS was not the header so you need data before it.
 While recovery the "Device 'XXXX' Block ... " appears.
@@ -46,18 +53,22 @@ Use following command and adjust values accordingly:
 Replace uppercase with your values.
 
 DEPENDENCIES (Ubuntu packages as reference)
-bash (bash)
-findmnt (mount)
-stat (coreutils)
-blockdev (util-linux)
-dd (coreutils)
-grep (grep)
+
+- bash (bash)
+- findmnt (mount)
+- stat (coreutils)
+- blockdev (util-linux)
+- dd (coreutils)
+- grep (grep)
+
 It may or may not work with busybox, not tested.
 
 CONCLUSION
+
 Worked for me after mistyping > as in the first example and while /etc (rootfs) was on SSD without TRIM enabled.
 
 LIMITATIONS
+
 - The tool is designed as a one-liner so you don't need to create any files on your drive.
   If you create one after you've overwritten your file you may be overwriting the data you are search for in the blocks.
 - Whole matching blocks are saved. You need to truncate/correct the contents manually.
