@@ -1,8 +1,10 @@
 DESCRIPTION
+-----------
 
 A bash one-liner to help find overwritten file on the disk.
 
 EXPLANATION
+-----------
 
 You can still find a previous (or even current) version somewhere on the disk if you are lucky.
 Should work even if the file was deleted unless you deleted containing directory.
@@ -10,6 +12,7 @@ Not tested. You may try this or undelete if the filesystem supports such operati
 No guarantee, of course. It depends on a number of conditions.
 
 MODIFYING RECOVERY PARAMETERS
+-----------------------------
 
 You can set few environmental variables (upper case) to change the default behavior.
 Take a look at the script file. Explanation is there.
@@ -20,12 +23,14 @@ Take a look at the script file. Explanation is there.
 Mount a tmpfs somewhere if you have no other permanent device and copy files later.
 
 BEST PRACTICES
+--------------
 
 - If you do some stupid thing, remount your filesystem readonly. Immediately.
 - Then (export variables and) execute the one-liner.
-- *BACKUP YOUR IMPORTANT FILES BEFORE DOING STUPID THINGS!* LOL :)
+- **BACKUP YOUR IMPORTANT FILES BEFORE DOING STUPID THINGS!** LOL :)
 
 DEPENDENCIES (Ubuntu packages as reference)
+------------
 
 - bash (bash)
 - findmnt (mount)
@@ -37,10 +42,12 @@ DEPENDENCIES (Ubuntu packages as reference)
 It may or may not work with busybox, not tested.
 
 CONCLUSION
+----------
 
 Worked for me after mistyping > as in the first example and while /etc (rootfs) was on SSD without TRIM enabled.
 
 LIMITATIONS
+-----------
 
 - The tool is designed as a one-liner so you don't need to create any files on your drive.
   If you create one after you've overwritten your file you may be overwriting the data you are search for in the blocks.
@@ -55,13 +62,14 @@ LIMITATIONS
   Press Ctrl-C if you are running over 100%.
 
 EXAMPLES
+--------
 
 [1]
 You accidentally run echo "something" > /etc/fstab instead of echo "something" >> /etc/fstab.
 Well you can use /proc/mounts or /etc/mtab but it may contain mounts you don't need to have in fstab.
 Or the nice UUID becomes /dev/sdXY. Or anything else.
 
-[2]
+[1]
 You can use it for different files:
   - CONTENTS='#!/bin/bash' or CONTENTS='#!/usr/bin/env bash' may find you your overwritten bash script (note the header)
   - CONTENTS='%PDF-' can find you "over-printed" PDFs
