@@ -39,7 +39,7 @@ DEPENDENCIES (Ubuntu packages as reference)
 - dd (coreutils)
 - grep (grep)
 
-It may or may not work with busybox, not tested.
+It may or may not work with your version of busybox, not tested.
 
 CONCLUSION
 ----------
@@ -50,16 +50,16 @@ LIMITATIONS
 -----------
 
 - The tool is designed as a one-liner so you don't need to create any files on your drive.
-  If you create one after you've overwritten your file you may be overwriting the data you are search for in the blocks.
-- Whole matching blocks are saved. You need to truncate/correct the contents manually.
+  If you create one after you've overwritten your file you may be overwriting the data you search for in the blocks.
+- Whole matching blocks are saved. You need to truncate/correct the contents manually. You might also need to use dd if the file is longer than a block size (RBS defaults to 4096 bytes).
 - Read permission on a whole block device and write permission on DUMPFS are needed for user who runs this tool.
 - Please note that FDE (i.e. LUKS) **DOES NOT** block you from finding your content as long as the filesystem is mounted and you search through the decrypted device.
   File level encryption like EncryptFS **DOES**.
 - CONTENTS may contain any characters except NULL (\x00).
   So **NO** - you cannot search for UTF16 text documents, unless you modify the grep command to use regexes.
 - Too short CONTENTS will match too many blocks
-- If the device is a partition or logical volume, the search won't start until it reaches the physical end of device.
-  Press Ctrl-C if you are running over 100% and don't want to search through 
+- If the device is a partition or logical volume, the search won't stop until it reaches the physical end of device.
+  Press Ctrl-C if you are running over 100% and don't want to search anymore 
 
 EXAMPLES
 --------
@@ -72,7 +72,7 @@ Or the nice UUID becomes /dev/sdXY. Or anything else.
 [2]
 You can use it for different files:
   - CONTENTS='#!/bin/bash' or CONTENTS='#!/usr/bin/env bash' may find you your overwritten bash script (note the header)
-  - CONTENTS='%PDF-' can find you "over-printed" PDFs
+  - CONTENTS='%PDF-' can find your "over-printed" PDFs
   - CONTENTS='JFIF' or CONTENTS='Exif' may find your deleted holiday photos.
   - CONTENTS=$'\x89PNG' can find your deleted PNG images
 and so on.
